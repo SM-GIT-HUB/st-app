@@ -4,16 +4,18 @@ import Link from 'next/link'
 
 async function Navbar() {
     const session = await auth();
-    console.log(session);
+    session? console.log("yes") : console.log("no");
 
   return (
     <header className='px-5 py-e bg-white shadow-sm font-work-sans'>
-        <nav className='flex justify-between items-center'>
-            <Link href={'/'}>
-                <Image src={'/logo.png'} alt='logo' width={144} height={30} />
-            </Link>
+        <nav className='flex justify-between items-center py-1'>
+            <div>
+                <Link href={'/'}>
+                    <Image src={'/logo.png'} alt='logo' width={144} height={30} />
+                </Link>
+            </div>
 
-            <div className='flex items-center gap-5'>
+            <div className='flex flex-row items-center gap-5'>
                 {
                     session && session?.user ? (
                         <>
@@ -23,8 +25,8 @@ async function Navbar() {
 
                             <form action={async() => {
                                 'use server'
-                                let options = { redirectTo: '/' };
-                                await signOut(options);
+                                
+                                await signOut({ redirectTo: '/' });
                             }}>
                                 <button type='submit'>
                                     <span>Logout</span>
@@ -39,8 +41,8 @@ async function Navbar() {
                         <>
                             <form action={async() => {
                                 'use server'
-                                let provider = "github";
-                                await signIn(provider);
+                                
+                                await signIn("github");
                             }}>
                                 <button type='submit'>
                                     <span>Login</span>
@@ -54,5 +56,6 @@ async function Navbar() {
     </header>
   )
 }
+
 
 export default Navbar
