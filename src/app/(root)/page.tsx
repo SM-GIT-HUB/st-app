@@ -51,7 +51,7 @@ export default async function Home({ searchParams }: {
       <section className="section_container">
         <p className="text-30-semibold">
           {
-            query? `Search results for ${query}` :
+            query? `Search results for "${query}"` :
             "All Startups"
           }
         </p>

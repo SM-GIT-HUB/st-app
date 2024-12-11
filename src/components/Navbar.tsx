@@ -4,10 +4,10 @@ import Link from 'next/link'
 
 async function Navbar() {
     const session = await auth();
-    session? console.log("yes") : console.log("no");
+    session? console.log(session) : console.log("no");
 
   return (
-    <header className='px-5 py-e bg-white shadow-sm font-work-sans'>
+    <header className='px-5 py-3 bg-white shadow-sm font-work-sans'>
         <nav className='flex justify-between items-center py-1'>
             <div>
                 <Link href={'/'}>
