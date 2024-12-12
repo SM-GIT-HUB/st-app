@@ -3,12 +3,15 @@ import { EyeIcon, Link2 } from "lucide-react"
 import Image from "next/image"
 import Link from "next/link"
 import { Button } from "./ui/button"
+import { Author, Startup } from "@/sanity/types"
 
-function StartupCard({ post }: any) {
+export type StartupTypeCard = Omit<Startup, "author"> & { author? : Author };
+
+function StartupCard({ post }: { post: StartupTypeCard }) {
   return (
     <li className="startup-card group">
         <div className="flex-between">
-            <p className="startup_card_date">{formatDate(post._createdAt)}</p>
+            <p className="startup_card_date">{formatDate(new Date(post._createdAt))}</p>
 
             <div className="flex gap-1.5">
                 <EyeIcon className="size-6 text-primary" />
@@ -30,23 +33,23 @@ function StartupCard({ post }: any) {
             </div>
 
             <Link href={`/user/${post.author?._id}`}>
-                <Image src={post.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
+                <img src={post.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
             </Link>
         </div>
 
         <Link href={`/startup/${post._id}`}>
             <p className="startup-card_desc">{post.description}</p>
 
-            <Image src={post.image} alt="img" width={500} height={500} className="startup-card_img" />
+            <img src={post?.image} alt="img" width={500} height={500} className="startup-card_img" />
         </Link>
 
         <div className="flex-between gap-3 mt-5">
-            <Link href={`/?query=${post.category.toLowerCase()}`}>
+            <Link href={`/?query=${post?.category?.toLowerCase()}`}>
                 <p className="text-16-medium">{post.category}</p>
             </Link>
 
             <Button className="startup-card_btn hover:bg-blue-950 transition-all">
-                <Link href={`/?query=${post.category.toLowerCase()}`}>Details</Link>
+                <Link href={`/?query=${post?.category?.toLowerCase()}`}>Details</Link>
             </Button>
         </div>
     </li>

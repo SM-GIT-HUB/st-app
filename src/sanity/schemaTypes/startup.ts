@@ -44,6 +44,5 @@ export const startup = defineType({
             name: 'pitch',
             type: "markdown"
         })
-    ],
-    
+    ]
 })
