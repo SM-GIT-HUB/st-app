@@ -170,7 +170,7 @@ export type Markdown = string;
 
 export type AllSanitySchemaTypes = SanityImagePaletteSwatch | SanityImagePalette | SanityImageDimensions | SanityImageHotspot | SanityImageCrop | SanityFileAsset | SanityImageAsset | SanityImageMetadata | Geopoint | SanityAssetSourceData | Startup | Slug | Author | Markdown;
 export declare const internalGroqTypeReferenceTo: unique symbol;
-// Source: ./src/lib/queries.ts
+// Source: ./src/sanity/lib/queries.ts
 // Variable: STARTUP_QUERY
 // Query: *[ _type == "startup" && defined(slug.current)] | order(_createdAt desc) {        _id,        author -> {            name, image, bio, _id        },        title, slug, _createdAt, image, views, category, description, _updatedAt    }
 export type STARTUP_QUERYResult = Array<{
