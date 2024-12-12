@@ -49,7 +49,7 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
             </Link>
 
             <Button className="startup-card_btn hover:bg-blue-950 transition-all">
-                <Link href={`/?query=${post?.category?.toLowerCase()}`}>Details</Link>
+                <Link href={`/startup/${post._id}`}>Details</Link>
             </Button>
         </div>
     </li>
