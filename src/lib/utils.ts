@@ -7,8 +7,7 @@ export function cn(...inputs: ClassValue[]) {
 
 export function formatDate(date: Date)
 {
-  let d = new Date(date);
-  return d.toLocaleDateString('en-IN', {
+  return date.toLocaleDateString('en-IN', {
     month: "long",
     day: "numeric",
     year: "numeric"
