@@ -11,9 +11,8 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
     {
       // console.log("user", user);
       // console.log("account", account);
-      console.log("profile", profile);
+      // console.log("profile", profile);
       const existingUser = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_GITHUB_ID_QUERY, { id: profile?.id });
-      console.log(existingUser, "existing");
 
       if (!existingUser)
       {
