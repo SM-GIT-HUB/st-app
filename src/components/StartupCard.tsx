@@ -33,7 +33,7 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
             </div>
 
             <Link href={`/user/${post.author?._id}`}>
-                <img src={post.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
+                <img src={post?.author?.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
             </Link>
         </div>
 

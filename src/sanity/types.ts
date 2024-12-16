@@ -234,9 +234,25 @@ export type STARTUP_BY_ID_QUERYResult = {
 export type STARTUP_VIEWS_QUERYResult = {
   views: number | null;
 } | null;
-// Variable: AUTHOR_BY_GITHUB_ID_QUERY
-// Query: *[_type == "author" && id == $id][0]{        _id,        id,        name,        username,        email,        image,        bio    }
-export type AUTHOR_BY_GITHUB_ID_QUERYResult = {
+// Variable: AUTHOR_BY_ID_QUERY
+// Query: *[_type == "author" && id == $id || _id == $id][0]{        _id,        id,        name,        username,        email,        image,        bio    }
+export type AUTHOR_BY_ID_QUERYResult = {
+  _id: string;
+  id: null;
+  name: null;
+  username: null;
+  email: null;
+  image: null;
+  bio: null;
+} | {
+  _id: string;
+  id: null;
+  name: null;
+  username: null;
+  email: null;
+  image: string | null;
+  bio: null;
+} | {
   _id: string;
   id: number | null;
   name: string | null;
@@ -245,6 +261,24 @@ export type AUTHOR_BY_GITHUB_ID_QUERYResult = {
   image: string | null;
   bio: string | null;
 } | null;
+// Variable: STARTUPS_BY_AUTHOR_QUERY
+// Query: *[ _type == "startup" && author._ref == $id] | order(_createdAt desc) {        _id,        author -> {            name, image, bio, _id        },        title, slug, _createdAt, image, views, category, description    }
+export type STARTUPS_BY_AUTHOR_QUERYResult = Array<{
+  _id: string;
+  author: {
+    name: string | null;
+    image: string | null;
+    bio: string | null;
+    _id: string;
+  } | null;
+  title: string | null;
+  slug: Slug | null;
+  _createdAt: string;
+  image: string | null;
+  views: number | null;
+  category: string | null;
+  description: string | null;
+}>;
 
 // Query TypeMap
 import "@sanity/client";
@@ -253,6 +287,7 @@ declare module "@sanity/client" {
     "*[ _type == \"startup\" && defined(slug.current) && !defined($search) || title match $search || category match $search || author->name match $search] | order(_createdAt desc) {\n        _id,\n        author -> {\n            name, image, bio, _id\n        },\n        title, slug, _createdAt, image, views, category, description\n    }": STARTUPS_QUERYResult;
     "*[ _type == \"startup\" && _id == $id][0]{\n        _id,\n        author -> {\n            name, image, bio, _id, username\n        },\n        title, slug, _createdAt, image, views, category, description, pitch\n    }": STARTUP_BY_ID_QUERYResult;
     "*[ _type == \"startup\" && _id == $id][0]{\n        views\n    }": STARTUP_VIEWS_QUERYResult;
-    "*[_type == \"author\" && id == $id][0]{\n        _id,\n        id,\n        name,\n        username,\n        email,\n        image,\n        bio\n    }": AUTHOR_BY_GITHUB_ID_QUERYResult;
+    "*[_type == \"author\" && id == $id || _id == $id][0]{\n        _id,\n        id,\n        name,\n        username,\n        email,\n        image,\n        bio\n    }": AUTHOR_BY_ID_QUERYResult;
+    "*[ _type == \"startup\" && author._ref == $id] | order(_createdAt desc) {\n        _id,\n        author -> {\n            name, image, bio, _id\n        },\n        title, slug, _createdAt, image, views, category, description\n    }": STARTUPS_BY_AUTHOR_QUERYResult;
   }
 }

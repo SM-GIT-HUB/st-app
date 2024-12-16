@@ -1,12 +1,14 @@
 import { auth, signIn, signOut } from '@/auth'
+import { BadgePlus, LogOut } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
+import { Avatar, AvatarFallback, AvatarImage } from './ui/avatar';
 
 async function Navbar() {
     const session = await auth();
 
   return (
-    <header className='px-5 py-3 bg-white shadow-sm font-work-sans'>
+    <header className='px-5 py-3 bg-white shadow-sm font-work-sans sticky top-0 z-20'>
         <nav className='flex justify-between items-center py-1'>
             <div>
                 <Link href={'/'}>
@@ -17,9 +19,10 @@ async function Navbar() {
             <div className='flex flex-row items-center gap-5'>
                 {
                     session && session?.user ? (
-                        <>
+                        <div className='flex items-center gap-5'>
                             <Link href='/startup/create'>
-                                <span>Create</span>
+                                <span className='max-sm:hidden'>Create</span>
+                                <BadgePlus className='size-6 sm:hidden'/>
                             </Link>
 
                             <form action={async() => {
@@ -27,15 +30,19 @@ async function Navbar() {
                                 
                                 await signOut({ redirectTo: '/' });
                             }}>
-                                <button type='submit'>
-                                    <span>Logout</span>
+                                <button type='submit' className='flex items-center justify-center'>
+                                    <span className='max-sm:hidden'>Logout</span>
+                                    <LogOut className='size-6 sm:hidden text-red-500'/>
                                 </button>
                             </form>
 
-                            <Link href={`/user/${session?.user?.id}`}>
-                                <span>{session?.user?.name}</span>
+                            <Link href={`/user/${session?.id}`}>
+                                <Avatar className=''>
+                                    <AvatarImage src={session?.user?.image} alt={session?.user?.name} />
+                                    <AvatarFallback>AV</AvatarFallback>
+                                </Avatar>
                             </Link>
-                        </>
+                        </div>
                     ) : (
                         <>
                             <form action={async() => {

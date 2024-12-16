@@ -1,18 +1,18 @@
 import NextAuth from "next-auth"
 import GitHub from "next-auth/providers/github"
 import { client } from "./sanity/lib/client"
-import { AUTHOR_BY_GITHUB_ID_QUERY } from "./sanity/lib/queries"
+import { AUTHOR_BY_ID_QUERY } from "./sanity/lib/queries"
 import { writeClient } from "./sanity/lib/write-client"
  
 export const { handlers, auth, signIn, signOut } = NextAuth({
   providers: [GitHub],
   callbacks: {
-    async signIn({ user, account, profile })
+    async signIn({ user, account, profile }: any)
     {
       // console.log("user", user);
       // console.log("account", account);
       // console.log("profile", profile);
-      const existingUser = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_GITHUB_ID_QUERY, { id: profile?.id });
+      const existingUser = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_ID_QUERY, { id: profile?.id });
 
       if (!existingUser)
       {
@@ -29,11 +29,11 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return true;
     },
-    async jwt({ token, account, profile })
+    async jwt({ token, account, profile }: any)
     {
       if (account && profile)
       {
-        const user = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_GITHUB_ID_QUERY, {
+        const user = await client.withConfig({ useCdn: false }).fetch(AUTHOR_BY_ID_QUERY, {
           id: profile?.id
         })
 
@@ -42,7 +42,7 @@ export const { handlers, auth, signIn, signOut } = NextAuth({
 
       return token;
     },
-    async session({ session, token })
+    async session({ session, token }: any)
     {
       Object.assign(session, { id: token?.id });
       return session;
