@@ -37,7 +37,7 @@ function StartupForm() {
         toast({
           title: "Success",
           description: "Your startup pitch has been created successfully",
-          variant: "destructive"
+          variant: "default"
         })
         router.push(`/startup/${res._id}`)
       }
@@ -52,7 +52,7 @@ function StartupForm() {
         toast({
           title: "Error",
           description: "Please check your inputs and try again",
-          variant: "destructive"
+          variant: "default"
         })
 
         return { ...prevState, error: "Validation failed", status: "ERROR" }
