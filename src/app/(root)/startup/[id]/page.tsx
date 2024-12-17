@@ -18,7 +18,7 @@ const md = markdownit();
 async function StartUp({ params } : { params: Promise<{ id: string}> }) {
   const id = (await params).id;
 
-  const [ post, { select: editorPosts } ] = await Promise.all([
+  const [ post, posts ] = await Promise.all([
     client.fetch(STARTUP_BY_ID_QUERY, { id }),
     client.fetch(PLAYLIST_BY_SLUG_QUERY, { slug: `editors-pick` })
   ])
@@ -26,6 +26,8 @@ async function StartUp({ params } : { params: Promise<{ id: string}> }) {
   if (!post) {
     return notFound();
   }
+
+  const editorPosts = posts?.select;
 
   const parsedContent = md.render(post.pitch || "");
 
@@ -66,7 +68,7 @@ async function StartUp({ params } : { params: Promise<{ id: string}> }) {
         <hr className="divider" />
 
         {
-          (editorPosts?.length > 0)?
+          (editorPosts && editorPosts?.length > 0)?
           <div className="max-w-4xl mx-auto">
             <p className="text-30-semibold">Editor picks</p>
 
