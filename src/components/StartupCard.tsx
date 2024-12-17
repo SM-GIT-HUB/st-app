@@ -1,6 +1,5 @@
 import { formatDate } from "@/lib/utils"
 import { EyeIcon, Link2 } from "lucide-react"
-import Image from "next/image"
 import Link from "next/link"
 import { Button } from "./ui/button"
 import { Author, Startup } from "@/sanity/types"
@@ -33,14 +32,20 @@ function StartupCard({ post }: { post: StartupTypeCard }) {
             </div>
 
             <Link href={`/user/${post.author?._id}`}>
-                <img src={post?.author?.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
+                {
+                    post?.author?.image &&
+                    <img src={post?.author?.image} alt="user img" width={1000} height={1000} className="rounded-full w-[48px] h-[48px]"/>
+                }
             </Link>
         </div>
 
         <Link href={`/startup/${post._id}`}>
             <p className="startup-card_desc">{post.description}</p>
-
-            <img src={post?.image} alt="img" width={500} height={500} className="startup-card_img" />
+            
+            {
+                post?.image &&
+                <img src={post?.image} alt="img" width={500} height={500} className="startup-card_img" />
+            }
         </Link>
 
         <div className="flex-between gap-3 mt-5">

@@ -8,11 +8,11 @@ async function UserStartups({ id }: { id: string }) {
   return (
     <>
         {
-            (startups.length > 0)?
-            startups.map((s: any) => (
-                <StartupCard key={s._id} post={s}/>
-            )) :
-            <p className='no-result'>No posts yet</p>
+          (startups.length > 0)?
+          startups.map((s: any) => (
+            <StartupCard key={s._id} post={s}/>
+          )) :
+          <p className='no-result'>No posts yet</p>
         }
     </>
   )

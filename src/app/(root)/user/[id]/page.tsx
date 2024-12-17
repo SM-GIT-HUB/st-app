@@ -25,7 +25,7 @@ async function UserProfile({ params }: { params: Promise<{id: string}> }) {
             </div>
 
             {
-                user.name && user.image?
+                user?.name && user.image?
                 <Image src={user?.image} alt={user?.name} width={220} height={220} className="profile_image"/> : ""
             }
             

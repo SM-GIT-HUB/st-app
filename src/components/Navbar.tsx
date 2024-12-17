@@ -37,8 +37,11 @@ async function Navbar() {
                             </form>
 
                             <Link href={`/user/${session?.id}`}>
-                                <Avatar className=''>
-                                    <AvatarImage src={session?.user?.image} alt={session?.user?.name} />
+                                <Avatar>
+                                    {
+                                        session?.user?.image && session?.user?.name &&
+                                        <AvatarImage src={session?.user?.image} alt={session?.user?.name} />
+                                    }
                                     <AvatarFallback>AV</AvatarFallback>
                                 </Avatar>
                             </Link>

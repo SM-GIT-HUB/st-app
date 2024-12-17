@@ -10,9 +10,6 @@ import { Skeleton } from "@/components/ui/skeleton"
 import View from "@/components/View"
 import StartupCard from "@/components/StartupCard"
 
-
-// export const experimental_ppr = true
-
 const md = markdownit();
 
 async function StartUp({ params } : { params: Promise<{ id: string}> }) {
@@ -41,12 +38,18 @@ async function StartUp({ params } : { params: Promise<{ id: string}> }) {
       </section>
 
       <section className="section_container">
-        <img src={post.image || ""} alt="post image" className="w-full h-auto rounded-xl" />
+        {
+          post?.image &&
+          <img src={post.image} alt="post image" className="w-full h-auto rounded-xl" />
+        }
 
         <div className="space-y-5 mt-10 max-w-4xl mx-auto">
           <div className="flex-between gap-5">
             <Link href={`/user/${post.author?._id}`} className="flex gap-2 items-center mb-3" >
-              <Image src={post.author?.image || "#"} alt="avatar" width={64} height={64} className="rounded-full drop-shadow-lg" />
+              {
+                post?.author?.image &&
+                <Image src={post?.author?.image} alt="avatar" width={64} height={64} className="rounded-full drop-shadow-lg" />
+              }
 
               <div>
                 <p className="text-20-medium">{post.author?.name}</p>

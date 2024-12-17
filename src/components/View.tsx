@@ -10,7 +10,6 @@ async function View({ id }: {id: string}) {
     after(async() => {
         await writeClient.patch(id).set({ views: (views || 1)  + 1 }).commit();
     })
-    console.log(views);
 
   return (
     <div className="view-container">
